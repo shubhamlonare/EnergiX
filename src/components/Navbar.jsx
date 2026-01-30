@@ -10,8 +10,14 @@ import Button from '@mui/material/Button';
 import Logo from '../../public/logo.svg';
 
 import '../app/globals.css';
+import { useRouter } from 'next/navigation';
 
 function ResponsiveAppBar() {
+    const router = useRouter();
+
+    const handleSubmit = ()=>{
+router.push("/register");
+    }
 
     return (
         <AppBar position="static" sx={{ bgcolor: "white" }}>
@@ -26,9 +32,9 @@ function ResponsiveAppBar() {
                         <Button>Features</Button>
                         <Button>How It Works</Button>
                         <Button>Benefits</Button>
-                        <Button>Login</Button>
+                        <Button onClick={()=>router.push('/login')}>Login</Button>
 
-                        <Button variant="contained" color="primary" sx={{borderRadius: "10px"}}>
+                        <Button variant="contained" color="primary" sx={{borderRadius: "10px"}} onClick={handleSubmit} >
                             Get Started
                         </Button>
                     </Box>
