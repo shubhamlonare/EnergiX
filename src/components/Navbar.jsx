@@ -1,47 +1,77 @@
-'use client';
-
-import * as React from 'react';
 import Image from "next/image";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Logo from '../../public/logo.svg';
+import NextLink from "next/link";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import Logo from "../../public/logo.svg";
 
-import '../app/globals.css';
-import { useRouter } from 'next/navigation';
+export default function ResponsiveAppBar() {
+  return (
+    <AppBar
+      position="sticky"
+      sx={{
+        bgcolor: "white",
+        boxShadow: "0 1px 6px rgba(0,0,0,0.08)",
+      }}
+    >
+      <Container maxWidth="lg">
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
 
-function ResponsiveAppBar() {
-    const router = useRouter();
+          {/* Logo */}
+          <NextLink href="/" passHref>
+            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+              <Image src={Logo} alt="Logo" width={120} height={40} />
+            </Box>
+          </NextLink>
 
-    const handleSubmit = ()=>{
-router.push("/register");
-    }
+          {/* Navigation */}
+          <Box sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
 
-    return (
-        <AppBar position="static" sx={{ bgcolor: "white" }}>
-            <Container maxWidth="lg">
-                <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <NextLink href="#features" passHref>
+              <Button sx={navButtonStyle}>Features</Button>
+            </NextLink>
 
-                    {/* Left: Logo */}
-                    <Image src={Logo} alt="Logo" width={120} height={40} />
+            <NextLink href="#how-it-works" passHref>
+              <Button sx={navButtonStyle}>How It Works</Button>
+            </NextLink>
 
-                    {/* Right: Tabs + Button */}
-                    <Box sx={{ display: "flex", gap: 2, }}>
-                        <Button>Features</Button>
-                        <Button>How It Works</Button>
-                        <Button>Benefits</Button>
-                        <Button onClick={()=>router.push('/login')}>Login</Button>
+            <NextLink href="#benefits" passHref>
+              <Button sx={navButtonStyle}>Benefits</Button>
+            </NextLink>
 
-                        <Button variant="contained" color="primary" sx={{borderRadius: "10px"}} onClick={handleSubmit} >
-                            Get Started
-                        </Button>
-                    </Box>
+            <NextLink href="/login" passHref>
+              <Button sx={{ ...navButtonStyle, color: "#111827" }}>Login</Button>
+            </NextLink>
 
-                </Toolbar>
-            </Container>
-        </AppBar>
-    );
+            <NextLink href="/register" passHref>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: "10px",
+                  textTransform: "none",
+                  px: 2.5,
+                }}
+              >
+                Get Started
+              </Button>
+            </NextLink>
+
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 }
-export default ResponsiveAppBar;
+
+const navButtonStyle = {
+  color: "#1976d2",
+  textTransform: "none",
+  fontWeight: 500,
+  fontSize: "15px",
+  "&:hover": {
+    backgroundColor: "transparent",
+    color: "#1e40af",
+  },
+};

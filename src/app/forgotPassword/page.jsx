@@ -78,7 +78,7 @@ export default function ForgotPasswordPage() {
               Forgot Password
             </Typography>
             <Typography sx={{ opacity: 0.9, mb: 4 }}>
-              Enter your registered email address below and we'll send you a
+              Enter your registered email address below and we ll send you a
               password reset link.
             </Typography>
           </Box>
