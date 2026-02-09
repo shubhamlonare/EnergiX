@@ -1,5 +1,8 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import NextLink from "next/link";
+import Link from "next/link";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,56 +11,63 @@ import Button from "@mui/material/Button";
 import Logo from "../../public/logo.svg";
 
 export default function ResponsiveAppBar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(Boolean(localStorage.getItem("token")));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+  };
+
   return (
     <AppBar
       position="sticky"
-      sx={{
-        bgcolor: "white",
-        boxShadow: "0 1px 6px rgba(0,0,0,0.08)",
-      }}
+      sx={{ bgcolor: "white", boxShadow: "0 1px 6px rgba(0,0,0,0.08)" }}
     >
       <Container maxWidth="lg">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
 
           {/* Logo */}
-          <NextLink href="/" passHref>
+          <Link href="/">
             <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
               <Image src={Logo} alt="Logo" width={120} height={40} />
             </Box>
-          </NextLink>
+          </Link>
 
           {/* Navigation */}
           <Box sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
+            <Link href="#features"><Button sx={navButtonStyle}>Features</Button></Link>
+            <Link href="#how-it-works"><Button sx={navButtonStyle}>How It Works</Button></Link>
+            <Link href="#benefits"><Button sx={navButtonStyle}>Benefits</Button></Link>
 
-            <NextLink href="#features" passHref>
-              <Button sx={navButtonStyle}>Features</Button>
-            </NextLink>
+            {!isLoggedIn ? (
+              <>
+                <Link href="/login">
+                  <Button sx={{ ...navButtonStyle, color: "#111827" }}>
+                    Login
+                  </Button>
+                </Link>
 
-            <NextLink href="#how-it-works" passHref>
-              <Button sx={navButtonStyle}>How It Works</Button>
-            </NextLink>
-
-            <NextLink href="#benefits" passHref>
-              <Button sx={navButtonStyle}>Benefits</Button>
-            </NextLink>
-
-            <NextLink href="/login" passHref>
-              <Button sx={{ ...navButtonStyle, color: "#111827" }}>Login</Button>
-            </NextLink>
-
-            <NextLink href="/register" passHref>
+                <Link href="/register">
+                  <Button
+                    variant="contained"
+                    sx={{ borderRadius: "10px", textTransform: "none", px: 2.5 }}
+                  >
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            ) : (
               <Button
-                variant="contained"
-                sx={{
-                  borderRadius: "10px",
-                  textTransform: "none",
-                  px: 2.5,
-                }}
+                onClick={handleLogout}
+                sx={{ ...navButtonStyle, color: "#111827" }}
               >
-                Get Started
+                Logout
               </Button>
-            </NextLink>
-
+            )}
           </Box>
         </Toolbar>
       </Container>

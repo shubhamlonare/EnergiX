@@ -1,205 +1,144 @@
-"use client";
-
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import {
-  ThemeProvider,
-  createTheme,
-  CssBaseline,
   Box,
   Grid,
-  TextField,
   Typography,
-  Button,
-  IconButton,
-  InputAdornment,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Card,
+  Button,
 } from "@mui/material";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
-import { Mail, Lock, Zap } from "lucide-react";
+import NextLink from "next/link";
+import BoltIcon from "@mui/icons-material/Bolt";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import TextInput from "@/components/form/TextInput";
+import SubmitButton from "@/components/form/SubmitButton";
+import { loginUser } from "./action";
 
-export default function LoginPage() {
-  const router = useRouter();
-  const [mode, setMode] = useState("light");
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-          primary: { main: "#2563EB" },
-          background: {
-            default: mode === "light" ? "#F8FAFC" : "#121212",
-            paper: mode === "light" ? "#ffffff" : "#1E1E1E",
-          },
-        },
-        shape: { borderRadius: 12 },
-        typography: {
-          fontFamily: "Inter, sans-serif",
-        },
-      }),
-    [mode]
-  );
+
+export default function page() {
+  const features = [
+    "Secure Login",
+    "Real-time Monitoring",
+    "Smart Billing System",
+  ];
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-
-      <Grid container minHeight="100vh">
-        {/* ================= LEFT SECTION ================= */}
-        <Grid
-          item
-          lg={6}
-          display={{ xs: "none", lg: "flex" }}
-          flexDirection="column"
-          justifyContent="space-between"
-          px={{ lg: 6, xl: 10 }}
-          py={{ lg: 8, xl: 10 }}
-          sx={{
-            background: "linear-gradient(135deg, #2563EB, #1E40AF)",
-            color: "#fff",
+    <Grid container spacing={2} sx={{ height: "100vh" }}>
+      {/* LEFT SECTION */}
+      <Grid
+        size={6}
+        sx={{
+          bgcolor: "#1e40af",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "90vh",
           }}
         >
-          <Box display="flex" alignItems="center" gap={1}>
-            <Zap />
-            <Typography variant="h5" fontWeight="bold">
-              EnergiX
-            </Typography>
-          </Box>
+          <NextLink href="/" passHref>
+            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+              <BoltIcon sx={{ fontSize: 50, color: "white" }} />
+              <Typography variant="h5" fontWeight="bold" color="white">
+                EnergiX
+              </Typography>
+            </Box>
+          </NextLink>
 
-          <Box maxWidth={520}>
-            <Typography variant="h3" fontWeight="bold" gutterBottom>
+          <div style={{ color: "white" }}>
+            <Typography variant="h4" fontWeight="bold">
               Welcome Back
             </Typography>
-            <Typography sx={{ opacity: 0.9, mb: 4 }}>
-              Login to manage your electricity usage, bills, and payments with
-              ease.
+            <Typography fontSize={12}>
+              Login to manage your electricity consumption efficiently.
             </Typography>
 
-            {[
-              "Secure Login",
-              "Real-time Consumption",
-              "Smart Billing System",
-            ].map((text) => (
-              <Typography key={text} sx={{ mb: 1.2 }}>
-                ✔ {text}
-              </Typography>
-            ))}
-          </Box>
+            <List sx={{ mt: 3 }}>
+              {features.map((feature, index) => (
+                <ListItem key={index} disablePadding>
+                  <ListItemIcon sx={{ minWidth: "30px", color: "white" }}>
+                    <CheckCircleIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary={feature} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
 
-          <Typography variant="caption">
+          <Typography sx={{ fontSize: "12px", color: "white" }}>
             © 2024 EnergiX. All rights reserved.
           </Typography>
-        </Grid>
-
-        {/* ================= RIGHT SECTION ================= */}
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          minHeight="100vh"
-          display="flex"
-          justifyContent="center"
-           mx={"auto"}
-          alignItems="center"
-          px={{ xs: 2, sm: 4, md: 6 }}
-        >
-          {/* ================= CARD ================= */}
-          <Card
-            sx={{
-              width: "100%",
-              maxWidth: 480,
-              p: { xs: 3, sm: 4 },
-              borderRadius: 4,
-              mt: 4,
-              boxShadow:
-                mode === "light"
-                  ? "0 12px 32px rgba(0,0,0,0.12)"
-                  : "0 12px 32px rgba(0,0,0,0.6)",
-              mx: "auto",
-            }}
-          >
-            {/* Header */}
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              mb={3}
-            >
-              <Typography fontWeight="bold">Login</Typography>
-
-              <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
-            </Box>
-
-            {/* Title */}
-            <Typography variant="h5" fontWeight="bold">
-              Sign in to EnergiX
-            </Typography>
-            <Typography color="text.secondary" mb={3}>
-              Enter your credentials to continue
-            </Typography>
-
-            {/* Form */}
-            <Box component="form">
-              <TextField
-                fullWidth
-                label="Email Address"
-                margin="normal"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Mail size={18} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              <TextField
-                fullWidth
-                type="password"
-                label="Password"
-                margin="normal"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Lock size={18} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              <Box textAlign="right" mt={1}>
-                <Button variant="text" size="small" onClick={()=>router.push('/forgotPassword')}>
-                  Forgot Password?
-                </Button>
-              </Box>
-
-              <Button
-                fullWidth
-                variant="contained"
-                size="large"
-                sx={{ mt: 2 }}
-              >
-                Login
-              </Button>
-            </Box>
-
-            <Typography align="center" mt={3}>
-              Don’t have an account?{" "}
-              <Button
-                variant="text"
-                onClick={() => router.push("/register")}
-              >
-                Register
-              </Button>
-            </Typography>
-          </Card>
-        </Grid>
+        </div>
       </Grid>
-    </ThemeProvider>
+
+      {/* RIGHT SECTION */}
+      <Grid
+        size={6}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <Card
+          sx={{
+            width: "25vw",
+            borderRadius: 2,
+            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+            transition: "transform 0.2s, box-shadow 0.2s",
+            "&:hover": {
+              transform: "translateY(-4px)",
+              boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
+            },
+          }}
+        >
+          <Box m={3}>
+            <Typography
+              variant="h6"
+              textAlign="center"
+              fontWeight="bold"
+            >
+              Login
+            </Typography>
+            <Typography fontSize={14} textAlign="center" mb={2}>
+              Sign in to your account
+            </Typography>
+
+            <form action={loginUser}>
+              <TextInput name="email" label="Email" type="email" />
+              <TextInput name="password" label="Password" type="password" />
+
+              <Typography
+                fontSize="12px"
+                textAlign="right"
+                sx={{
+                  color: "#2563EB",
+                  cursor: "pointer",
+                  mb: 1,
+                  "&:hover": { textDecoration: "underline" },
+                }}
+              >
+                Forgot Password?
+              </Typography>
+
+              <SubmitButton label="Login" />
+
+              <Typography fontSize="12px" textAlign="center" mt={2}>
+                Don’t have an account?{" "}
+                <NextLink href="/register" style={{ color: "#2563EB" }}>
+                  Register
+                </NextLink>
+              </Typography>
+            </form>
+          </Box>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }

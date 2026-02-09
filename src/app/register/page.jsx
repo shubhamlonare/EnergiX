@@ -102,16 +102,22 @@ export default function page() {
                 </Typography>
               </div>
               <SubmitButton label="Create Account" />
-              <Typography fontSize={'12px'} textAlign={'center'}  mt={2}>Already have an account? <Typography
-                component="span"
-                sx={{
-                  color: "#2563EB",
-                  cursor: "pointer",
-                  "&:hover": { textDecoration: "underline" },
-                  fontSize: '12px',
-                 
-                }}
-              >Login</Typography></Typography>
+             <Typography fontSize="12px" textAlign="center" mt={2}>
+  Already have an account?{" "}
+  <NextLink href="/login" style={{ textDecoration: "none" }}>
+    <Typography
+      component="span"
+      sx={{
+        color: "#2563EB",
+        cursor: "pointer",
+        fontSize: "12px",
+        "&:hover": { textDecoration: "underline" },
+      }}
+    >
+      Login
+    </Typography>
+  </NextLink>
+</Typography>
             </form>
           </div>
 
