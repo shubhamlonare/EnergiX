@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AppBar from "@mui/material/AppBar";
@@ -11,16 +8,7 @@ import Button from "@mui/material/Button";
 import Logo from "../../public/logo.svg";
 
 export default function ResponsiveAppBar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    setIsLoggedIn(Boolean(localStorage.getItem("token")));
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-  };
 
   return (
     <AppBar
@@ -28,7 +16,7 @@ export default function ResponsiveAppBar() {
       sx={{ bgcolor: "white", boxShadow: "0 1px 6px rgba(0,0,0,0.08)" }}
     >
       <Container maxWidth="lg">
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between", margin: 0 }}>
 
           {/* Logo */}
           <Link href="/">
@@ -43,7 +31,7 @@ export default function ResponsiveAppBar() {
             <Link href="#how-it-works"><Button sx={navButtonStyle}>How It Works</Button></Link>
             <Link href="#benefits"><Button sx={navButtonStyle}>Benefits</Button></Link>
 
-            {!isLoggedIn ? (
+            
               <>
                 <Link href="/login">
                   <Button sx={{ ...navButtonStyle, color: "#111827" }}>
@@ -60,14 +48,6 @@ export default function ResponsiveAppBar() {
                   </Button>
                 </Link>
               </>
-            ) : (
-              <Button
-                onClick={handleLogout}
-                sx={{ ...navButtonStyle, color: "#111827" }}
-              >
-                Logout
-              </Button>
-            )}
           </Box>
         </Toolbar>
       </Container>
